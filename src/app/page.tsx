@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import EventCard from '@/components/EventCard';
+import EventCard from '../components/EventCard';
 
 export default function Home() {
   const [events, setEvents] = useState([]);
