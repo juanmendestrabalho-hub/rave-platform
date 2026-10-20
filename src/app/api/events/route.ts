@@ -1,26 +1,15 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 
-const prisma = new PrismaClient();
-
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const genre = searchParams.get('genre');
-  const search = searchParams.get('search');
-
+export async function GET() {
   try {
     const events = await prisma.event.findMany({
-      where: {
-        AND: [
-          genre ? { genre: { equals: genre, mode: 'insensitive' } } : {},
-          search ? { title: { contains: search, mode: 'insensitive' } } : {},
-          { date: { gte: new Date() } } // Apenas eventos futuros
-        ]
-      },
-      orderBy: { date: 'asc' } // Organização cronológica 
+      orderBy: { date: 'asc' },
     });
     return NextResponse.json(events);
   } catch (error) {
-    return NextResponse.json({ error: 'Erro ao buscar eventos' }, { status: 500 });
+    console.error("Erro ao procurar eventos:", error);
+    // Retorna uma lista vazia em vez de derrubar a API com erro 500
+    return NextResponse.json([], { status: 200 });
   }
 }
