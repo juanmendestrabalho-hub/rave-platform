@@ -17,7 +17,7 @@ export async function GET(request: Request) {
           { date: { gte: new Date() } } // Apenas eventos futuros
         ]
       },
-      orderBy: { date: 'asc' } // Organização cronológica
+      orderBy: { date: 'asc' } // Organização cronológica 
     });
     return NextResponse.json(events);
   } catch (error) {
