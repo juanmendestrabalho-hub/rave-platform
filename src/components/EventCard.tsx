@@ -24,7 +24,7 @@ export default function EventCard({ event }: { event: any }) {
         </div>
         
         <p className="text-neutral-400 text-sm mb-4">
-          📍 {event.location} - {event.city}/{event.state}
+           {event.location} - {event.city}/{event.state}
         </p>
         
         <div className="flex items-center gap-2 mb-6">
