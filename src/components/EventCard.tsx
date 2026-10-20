@@ -2,6 +2,7 @@ export default function EventCard({ event }: { event: any }) {
   const dateObj = new Date(event.date);
   const formattedDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short' }).format(dateObj);
 
+  
   return (
     <div className="bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-800 hover:border-purple-500 transition-all duration-300 group">
       <div className="relative h-48 overflow-hidden">
