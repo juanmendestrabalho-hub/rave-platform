@@ -36,19 +36,7 @@ export async function GET() {
       mensagem: `Sucesso! ${inseridos} eventos foram adicionados ao Supabase.` 
     });
   } catch (error) {
+    console.error("Erro no Seed:", error);
     return NextResponse.json({ erro: "Falha ao popular o banco de dados." }, { status: 500 });
-  }
-}
-
-export async function GET() {
-  try {
-    const events = await prisma.event.findMany({
-      orderBy: { date: 'asc' },
-    });
-    return NextResponse.json(events);
-  } catch (error) {
-    console.error("Erro ao procurar eventos:", error);
-    // Retorna uma lista vazia em vez de derrubar a API com erro 500
-    return NextResponse.json([], { status: 200 });
   }
 }
