@@ -7,9 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
-  "scrape": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/scraper.ts"
-},
-  
+  },
   "dependencies": {
     "@prisma/client": "^5.0.0",
     "next": "latest",
@@ -26,9 +24,4 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
-}
-
-
-"prisma": {
-  "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 }
