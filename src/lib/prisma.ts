@@ -1,0 +1,1 @@
+# Instância do Prisma Client
