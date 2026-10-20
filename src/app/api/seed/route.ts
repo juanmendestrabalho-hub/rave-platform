@@ -30,7 +30,6 @@ export async function GET() {
   try {
     let inseridos = 0;
     for (const evento of eventosExemplo) {
-      // Procura se já existe evento com este ticketUrl
       const existente = await prisma.event.findFirst({
         where: { ticketUrl: evento.ticketUrl }
       });
@@ -46,8 +45,11 @@ export async function GET() {
     return NextResponse.json({ 
       mensagem: `Sucesso! ${inseridos} eventos foram adicionados ao Supabase.` 
     });
-  } catch (error) {
-    console.error("Erro no Seed:", error);
-    return NextResponse.json({ erro: "Falha ao popular o banco de dados." }, { status: 500 });
+  } catch (error: any) {
+    // Retorna a mensagem de erro exata do Prisma/Supabase na resposta
+    return NextResponse.json({ 
+      erro: "Falha ao popular o banco de dados.",
+      detalhes: error?.message || String(error)
+    }, { status: 500 });
   }
 }
