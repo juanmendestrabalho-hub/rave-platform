@@ -5,7 +5,10 @@ export async function GET() {
   const eventosExemplo = [
     {
       title: "Rave Underground Techno",
-      description: "Festa de música eletrónica com DJs nacionais.",
+      city: "São Paulo",
+      state: "SP",
+      genre: "Techno",
+      platform: "Shotgun",
       date: new Date("2026-11-15T22:00:00Z"),
       location: "São Paulo - SP",
       ticketUrl: "https://shotgun.live/pt-br/events/exemplo-1",
@@ -13,7 +16,10 @@ export async function GET() {
     },
     {
       title: "Psytrance Open Air",
-      description: "12 horas de música e arte ao ar livre.",
+      city: "Rio de Janeiro",
+      state: "RJ",
+      genre: "Psytrance",
+      platform: "Sympla",
       date: new Date("2026-12-05T18:00:00Z"),
       location: "Rio de Janeiro - RJ",
       ticketUrl: "https://www.sympla.com.br/exemplo-2",
@@ -24,12 +30,17 @@ export async function GET() {
   try {
     let inseridos = 0;
     for (const evento of eventosExemplo) {
-      await prisma.event.upsert({
-        where: { ticketUrl: evento.ticketUrl },
-        update: {},
-        create: evento,
+      // Procura se já existe evento com este ticketUrl
+      const existente = await prisma.event.findFirst({
+        where: { ticketUrl: evento.ticketUrl }
       });
-      inseridos++;
+
+      if (!existente) {
+        await prisma.event.create({
+          data: evento
+        });
+        inseridos++;
+      }
     }
 
     return NextResponse.json({ 
